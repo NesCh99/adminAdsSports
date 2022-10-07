@@ -20,7 +20,7 @@ class Suscripcion extends Migration
             $table->enum('TipoSus', [1, 2])->default(1);// Tipo de suscripcion 1: normal; 2: invitado
             $table->timestamp('CreacionSus')->nullable();
             //Definicion de la clabe foranea que refiere a Cliente
-            $table->foreign('idCliente')->references('idCliente')->on('Clientes')->onDelete("cascade");
+            $table->foreign('idCliente')->references('id')->on('users')->onDelete("cascade");
 
             //Definicion de la clabe foranea que refiere a Video
             $table->foreign('idVideo')->references('idVideo')->on('Videos')->onDelete("cascade");

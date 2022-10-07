@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-md-7 pr-5 pb-2">
                         <h5><b>Portada</b></h5>
-                        <img src="{{Storage::url($deporte->PortadaDep)}}" class="img-fluid rounded">   
+                        <img src="{{$deporte->PortadaDep}}" class="img-fluid rounded">   
                     </div>
                     <div class="col-md-5">
                         <h5><b>Descripcion</b></h5>

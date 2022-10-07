@@ -2,26 +2,51 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Cliente extends Model
+use App\Models\Subscripcion;
+
+class User extends Authenticatable implements MustVerifyEmail
 {
-    public $table = 'clientes';
-    protected $primaryKey = 'idCliente';
-    const CREATED_AT = 'CreacionCli'; // personaliza el campo created_at
-    const UPDATED_AT = 'ModificacionCli'; // personaliza el campo updated_at
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'NombreCli',
+        'name',
+        'phone',
+        'address',
         'email',
         'password',
     ];
+
+   
+
+ 
+    public function pagos(){
+        return $this->hasMany(Pago::class,'idCliente');
+    }
+
+
+    //relacion muchos a muchos 
+
+    public function videos(){
+        return  $this->belongsToMany(Video::class, 'suscripciones' ,'idCliente'	,'idVideo')
+        ->withPivot('TipoSus','CreacionSus');
+     }
+
+
+
+
+
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,15 +66,4 @@ class Cliente extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    //Relacion 1 a n Pagos
-
-    public function Pagos(){ //Realiza la relacion
-        return $this->hasMany(Pago::class, 'idCliente'); //Relacion 1 a n Pagos
-    }
-
-    //Relacion muchos a muchos 
-    public function Suscripciones(){ //Realiza la relacion
-        return $this->belongsToMany(Video::class, 'suscripciones', 'idCliente', 'idVideo')->withPivot('TipoSus'); //Relacion n a n Video
-    }
 }

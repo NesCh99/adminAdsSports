@@ -56,12 +56,19 @@ class DeporteController extends Controller
     public function store(Request $request)
     {
 
+
         $request -> validate([ // Valida los datos enviados desde el formulario en create
             'Nombre'=>'required|unique:deportes,NombreDep',
             'Descripcion'=>'required',
             'Portada' => 'required|image|max:5000'
         ]);
-        $portada = Storage::disk('public')->put('deportes', $request->file('Portada'));//Guarda la imagen en public/deportes y devuelve el url
+
+
+      //  $portada = Storage::disk('public')->put('deportes', $request->file('Portada'));//Guarda la imagen en public/deportes y devuelve el url
+        $portada = Storage::url( $request->file('Portada')->store('public/imagenes'));//Guarda la imagen en public/deportes y devuelve el url
+         
+
+      
         $deporte = Deporte::create([ //Crea el registro en la tabla
             'NombreDep' => $request->input('Nombre'),
             'PortadaDep' => $portada,

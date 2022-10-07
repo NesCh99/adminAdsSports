@@ -7,9 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pago extends Model
 {
-    public $table = 'pagos';
-    protected $primaryKey = 'idPago';
     use HasFactory;
+    public $timestamps = false;
+    protected $table = 'pagos';
+    protected $primaryKey = 'idPago';
+    const CREATED_AT = 'FechaHoraPago';
+  
+    protected $fillable =   [
+        'idPago',
+        'idCliente',
+        'NombreCompleto',
+        'Identificacion',
+        'Direccion',
+        'Telefono',
+        'TipoPago',
+        'Email',
+        'FechaHoraPago',
+        'TotalPago'
+    ];
 
     //Relacion muchos a muchos 
 

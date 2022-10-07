@@ -18,15 +18,16 @@ class CreatePagosTable extends Migration
             $table->id('idPago');//Clave Primaria
             $table->unsignedbigInteger('idCliente');//Clave Secundaria
             $table->string('NombreCompleto');
-            $table->char('Identificacion', 10);
+          
             $table->text('Direccion')->nullable(); //Puede ser nulo
             $table->char('Telefono', 10)->nullable(); //Puede ser nulo
+            $table->enum('TipoPago', [1, 2])->default(1);// Tipo de pago 1: normal; 2: campeonato
             $table->string('Email');
             $table->timestamp('FechaHoraPago');
             $table->float('TotalPago');
 
             //Definicion de la clave foranea que refiere a Cliente
-            $table->foreign('idCliente')->references('idCliente')->on('Clientes')->onDelete("cascade");
+            $table->foreign('idCliente')->references('id')->on('users')->onDelete("cascade");
         });
     }
 
